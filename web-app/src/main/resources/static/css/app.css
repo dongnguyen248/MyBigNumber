@@ -1,0 +1,144 @@
+:root {
+    --ink: #17212b;
+    --muted: #59636e;
+    --canvas: #f4f0e6;
+    --panel: #fffdf8;
+    --accent: #137c8b;
+    --accent-dark: #0c5965;
+    --line: #c9c5bb;
+}
+
+body {
+    background-color: var(--canvas);
+    background-image: linear-gradient(90deg, rgba(23, 33, 43, 0.035) 1px, transparent 1px),
+        linear-gradient(rgba(23, 33, 43, 0.035) 1px, transparent 1px);
+    background-size: 28px 28px;
+    color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
+    min-height: 100vh;
+}
+
+.application-shell {
+    margin: 0 auto;
+    max-width: 1080px;
+    padding: 4rem 1.5rem;
+}
+
+.workspace {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-top: 6px solid var(--accent);
+    box-shadow: 8px 8px 0 rgba(23, 33, 43, 0.1);
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.workspace-header {
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.25rem;
+}
+
+h1 {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: 0;
+    margin: 0;
+}
+
+.eyebrow {
+    color: var(--muted);
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    margin: 0 0 0.35rem;
+    text-transform: uppercase;
+}
+
+.form-label, .progress-meta, .actions {
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+.number-input {
+    background: #fff;
+    border-color: var(--line);
+    border-radius: 2px;
+    color: var(--ink);
+    font-family: Consolas, "Courier New", monospace;
+    overflow-wrap: anywhere;
+    resize: vertical;
+}
+
+.number-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.2rem rgba(19, 124, 139, 0.18);
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+}
+
+.btn {
+    border-radius: 2px;
+    font-weight: 700;
+}
+
+.btn-primary {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--accent-dark);
+    border-color: var(--accent-dark);
+}
+
+.progress-section, .result-section {
+    border-top: 1px solid var(--line);
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+}
+
+.progress-meta {
+    display: flex;
+    font-size: 0.9rem;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.progress {
+    border-radius: 0;
+    height: 0.75rem;
+}
+
+.progress-bar {
+    background-color: var(--accent);
+    transition: width 120ms linear;
+}
+
+.result-value {
+    color: var(--accent-dark);
+    display: block;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: clamp(1rem, 2.5vw, 1.75rem);
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.alert {
+    border-radius: 2px;
+    margin-top: 1.5rem;
+}
+
+@media (max-width: 575.98px) {
+    .application-shell {
+        padding: 1rem;
+    }
+
+    .workspace {
+        box-shadow: 4px 4px 0 rgba(23, 33, 43, 0.1);
+    }
+}
