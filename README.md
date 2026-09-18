@@ -9,8 +9,8 @@ A `0.0.1` release is complete only when all of the following are true:
 - A clean build passes.
 - Normal tests and the performance-test profile pass.
 - Annotated Git tag `0.0.1` exists on the release commit.
-- The repository is public.
-- The public repository has been cloned again and successfully built and tested from the clone.
+- The repository is available at `https://github.com/dongnguyen248/MyBigNumber`.
+- A fresh clone can check out tag `0.0.1` and successfully build and test the release.
 
 ## Maven Coordinates
 
@@ -117,16 +117,14 @@ mvn -q compile exec:java
 
 The produced `target/add2num-0.0.1.jar` is a thin library JAR, not an executable application. Do not run it with `java -jar`; use the Maven demo command above or supply the required classpath in a consuming application.
 
-## Git Clone Convention
-
-After the repository is public, clone it using the conventional local path:
-
-```text
-D:\Projects\github.com\dongnguyen248\add2num
-```
-
-For example:
+## Clone the Core Release
 
 ```powershell
-git clone https://github.com/dongnguyen248/add2num.git D:\Projects\github.com\dongnguyen248\add2num
+git clone https://github.com/dongnguyen248/MyBigNumber.git
+cd MyBigNumber
+git switch core
+mvn clean test
+mvn -Pperformance test
 ```
+
+To build the exact Task 1 release instead of the latest `core` branch, use `git switch --detach 0.0.1`.
