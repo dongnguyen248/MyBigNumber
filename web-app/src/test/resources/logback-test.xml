@@ -1,0 +1,4 @@
+<configuration>
+    <root level="WARN"/>
+    <logger name="com.dongnguyen248.add2num.MyBigNumber" level="WARN"/>
+</configuration>
