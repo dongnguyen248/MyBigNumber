@@ -7,11 +7,20 @@ Spring Boot MVC interface for adding two non-negative decimal numbers of arbitra
 - Java 17 or newer
 - Maven 3.9 or newer
 
-Install the core release in the local Maven repository before building the web application:
+Clone the repository and switch to the Task 2 branch:
+
+```powershell
+git clone https://github.com/dongnguyen248/MyBigNumber.git
+cd MyBigNumber
+git switch web
+```
+
+Install the Task 1 core release in the local Maven repository, then test and package the web application:
 
 ```powershell
 mvn clean install
 mvn -f web-app/pom.xml clean test
+mvn -f web-app/pom.xml package
 ```
 
 Start the application with:
@@ -21,6 +30,14 @@ mvn -f web-app/pom.xml spring-boot:run
 ```
 
 Open `http://localhost:8080`.
+
+The packaged application can also be started directly:
+
+```powershell
+java -jar web-app/target/add2num-web-0.0.1-SNAPSHOT.jar
+```
+
+If port `8080` is already in use, append `--server.port=8090` to either run command.
 
 ## Architecture
 
@@ -48,9 +65,3 @@ It returns `202 Accepted` with a job ID plus `eventsUrl` and `statusUrl`. Both n
 ## Configuration
 
 `src/main/resources/application.yml` configures port `8080`, a 60-second SSE timeout, five-minute completed-job retention, and executor limits of 2 core threads, 8 maximum threads, and 100 queued jobs.
-
-Package an executable Boot JAR with:
-
-```powershell
-mvn -f web-app/pom.xml package
-```
