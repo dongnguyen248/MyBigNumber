@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class MyBigNumber {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MyBigNumber.class);
+    private static final Logger log = LoggerFactory.getLogger(MyBigNumber.class);
 
     private MyBigNumber() {
     }
@@ -46,20 +46,25 @@ public final class MyBigNumber {
         int firstIndex = stn1.length() - 1;
         int secondIndex = stn2.length() - 1;
         int carry = 0;
+        int firstDigit;
+        int secondDigit;
+        int carryIn;
+        int digitSum;
+        int resultDigit;
 
-        LOGGER.info("Starting addition: stn1={} (length={}), stn2={} (length={})",
+        log.info("Starting addition: stn1={} (length={}), stn2={} (length={})",
                 stn1, stn1.length(), stn2, stn2.length());
 
         for (int completedSteps = 1; completedSteps <= totalSteps; completedSteps++) {
-            int firstDigit = firstIndex >= 0 ? stn1.charAt(firstIndex--) - '0' : 0;
-            int secondDigit = secondIndex >= 0 ? stn2.charAt(secondIndex--) - '0' : 0;
-            int carryIn = carry;
-            int digitSum = firstDigit + secondDigit + carryIn;
-            int resultDigit = digitSum % 10;
+            firstDigit = firstIndex >= 0 ? stn1.charAt(firstIndex--) - '0' : 0;
+            secondDigit = secondIndex >= 0 ? stn2.charAt(secondIndex--) - '0' : 0;
+            carryIn = carry;
+            digitSum = firstDigit + secondDigit + carryIn;
+            resultDigit = digitSum % 10;
             carry = digitSum / 10;
             result.append(resultDigit);
 
-            LOGGER.debug("col={} d1={} d2={} carryIn={} sum={} digit={} carryOut={}",
+            log.debug("col={} d1={} d2={} carryIn={} sum={} digit={} carryOut={}",
                     completedSteps, firstDigit, secondDigit, carryIn, digitSum, resultDigit, carry);
 
             if (listener != null) {
@@ -73,7 +78,7 @@ public final class MyBigNumber {
 
         String sum = canonicalize(result.reverse());
         long elapsedNanos = System.nanoTime() - startTime;
-        LOGGER.info("Completed addition: result={} steps={} durationNanos={}", sum, totalSteps, elapsedNanos);
+        log.info("Completed addition: result={} steps={} durationNanos={}", sum, totalSteps, elapsedNanos);
         return sum;
     }
 
