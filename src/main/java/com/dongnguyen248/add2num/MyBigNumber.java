@@ -42,7 +42,12 @@ public final class MyBigNumber {
     public static String sum(String stn1, String stn2, ProgressListener listener) {
         long startTime = System.nanoTime();
         int totalSteps = Math.max(stn1.length(), stn2.length());
-        StringBuilder result = new StringBuilder(totalSteps + 1);
+
+        // Allocate result array: at most totalSteps digits + 1 extra slot for a final carry.
+        // Index 0 is reserved for the potential carry; digits are written right-to-left.
+        char[] result = new char[totalSteps + 1];
+        int writeIndex = totalSteps; // start filling from the last position
+
         int firstIndex = stn1.length() - 1;
         int secondIndex = stn2.length() - 1;
         int carry = 0;
@@ -62,7 +67,7 @@ public final class MyBigNumber {
             digitSum = firstDigit + secondDigit + carryIn;
             resultDigit = digitSum % 10;
             carry = digitSum / 10;
-            result.append(resultDigit);
+            result[writeIndex--] = (char) ('0' + resultDigit);
 
             log.debug("col={} d1={} d2={} carryIn={} sum={} digit={} carryOut={}",
                     completedSteps, firstDigit, secondDigit, carryIn, digitSum, resultDigit, carry);
@@ -72,22 +77,26 @@ public final class MyBigNumber {
             }
         }
 
+        // writeIndex is now 0; use slot 0 for the carry if present
+        int startOffset;
         if (carry > 0) {
-            result.append(carry);
+            result[0] = (char) ('0' + carry);
+            startOffset = 0;
+        } else {
+            startOffset = 1; // skip the unused carry slot
         }
 
-        String sum = canonicalize(result.reverse());
+        String sum = canonicalize(result, startOffset, totalSteps + 1);
         long elapsedNanos = System.nanoTime() - startTime;
         log.info("Completed addition: result={} steps={} durationNanos={}", sum, totalSteps, elapsedNanos);
         return sum;
     }
 
-    private static String canonicalize(StringBuilder reversedResult) {
-        int firstNonZeroIndex = 0;
-        while (firstNonZeroIndex < reversedResult.length() - 1
-                && reversedResult.charAt(firstNonZeroIndex) == '0') {
-            firstNonZeroIndex++;
+    private static String canonicalize(char[] digits, int offset, int length) {
+        // Skip leading zeros, but always keep at least the last digit.
+        while (offset < length - 1 && digits[offset] == '0') {
+            offset++;
         }
-        return reversedResult.substring(firstNonZeroIndex);
+        return new String(digits, offset, length - offset);
     }
 }
