@@ -6,3 +6,7 @@ target/
 *.iml
 .vscode/
 *.class
+# Maven Wrapper
+.mvn/
+mvnw
+mvnw.cmd

@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:add2num;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  h2:
+    console:
+      enabled: false
+
+api:
+  security:
+    technician-username: ${API_TECHNICIAN_USERNAME:}
+    technician-password: ${API_TECHNICIAN_PASSWORD:}
+    supervisor-username: ${API_SUPERVISOR_USERNAME:}
+    supervisor-password: ${API_SUPERVISOR_PASSWORD:}
+
+server:
+  error:
+    include-message: never
+    include-stacktrace: never
