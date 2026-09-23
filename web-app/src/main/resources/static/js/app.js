@@ -1,4 +1,19 @@
 (() => {
+    const normalizeVietnameseText = (root) => {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        const textNodes = [];
+        let node;
+        while ((node = walker.nextNode())) textNodes.push(node);
+        textNodes.forEach((textNode) => { textNode.nodeValue = textNode.nodeValue.normalize("NFC"); });
+        root.querySelectorAll("[placeholder], [aria-label], [title]").forEach((element) => {
+            ["placeholder", "aria-label", "title"].forEach((attribute) => {
+                if (element.hasAttribute(attribute)) element.setAttribute(attribute, element.getAttribute(attribute).normalize("NFC"));
+            });
+        });
+    };
+
+    normalizeVietnameseText(document.body);
+
     const form = document.querySelector("#addition-form");
     const firstNumber = document.querySelector("#first-number");
     const secondNumber = document.querySelector("#second-number");
@@ -46,7 +61,7 @@
 
         const loadExercise = () => {
             currentExercise = exercises[exerciseIndex];
-            expression.textContent = `${formatNumber(currentExercise.left)} ${currentExercise.operation} ${formatNumber(currentExercise.right)} =`;
+            expression.textContent = `${formatNumber(currentExercise.left)} ${currentExercise.operation} ${formatNumber(currentExercise.right)} =`.normalize("NFC");
             exerciseNumber.textContent = String(exerciseIndex + 1);
             exerciseProgressBar.style.width = `${((exerciseIndex + 1) / exercises.length) * 100}%`;
             answer.value = "";
@@ -70,13 +85,13 @@
         checkAnswer.addEventListener("click", () => {
             const submitted = answer.value.trim();
             if (!/^\d+$/.test(submitted)) {
-                feedback.textContent = "Hãy nhập một số tự nhiên, không để trống nhé.";
+                feedback.textContent = "Hãy nhập một số tự nhiên, không để trống nhé.".normalize("NFC");
                 feedback.className = "exercise-feedback wrong";
                 return;
             }
             const expected = calculate(currentExercise).toString();
             if (BigInt(submitted) === BigInt(expected)) {
-                feedback.textContent = "Chính xác! Bạn đã xử lý đúng từng hàng số.";
+                feedback.textContent = "Chính xác! Bạn đã xử lý đúng từng hàng số.".normalize("NFC");
                 feedback.className = "exercise-feedback correct";
                 answer.disabled = true;
                 if (exerciseIndex < exercises.length - 1) {
@@ -87,7 +102,7 @@
                     checkAnswer.onclick = () => { feedback.textContent = "Bạn đã hoàn thành 10 câu. Hẹn gặp lại ở bài tiếp theo!"; };
                 }
             } else {
-                feedback.textContent = `Chưa đúng. Hãy thử đặt tính theo từng hàng rồi kiểm tra phần nhớ.`;
+                feedback.textContent = `Chưa đúng. Hãy thử đặt tính theo từng hàng rồi kiểm tra phần nhớ.`.normalize("NFC");
                 feedback.className = "exercise-feedback wrong";
             }
         });
