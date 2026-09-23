@@ -24,7 +24,6 @@
     </properties>
 
     <dependencies>
-        <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -35,8 +34,6 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
         </dependency>
-
-        <!-- Unit testing -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -64,9 +61,7 @@
                     <execution>
                         <id>attach-sources</id>
                         <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
+                        <goals><goal>jar</goal></goals>
                     </execution>
                 </executions>
             </plugin>
@@ -75,16 +70,13 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.10.1</version>
                 <configuration>
-                    <!-- Keeps Java 17 doclint differences from blocking artifact creation. -->
                     <doclint>none</doclint>
                 </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
                         <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
+                        <goals><goal>jar</goal></goals>
                     </execution>
                 </executions>
             </plugin>
@@ -95,6 +87,22 @@
                 <configuration>
                     <mainClass>com.dongnguyen248.add2num.Main</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals><goal>prepare-agent</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals><goal>report</goal></goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
