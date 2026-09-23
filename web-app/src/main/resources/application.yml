@@ -1,0 +1,24 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: add2num-web
+  mvc:
+    async:
+      request-timeout: 60s
+
+add2num:
+  sse-timeout-ms: 60000
+  completed-job-retention-seconds: 300
+  executor:
+    core-pool-size: 2
+    max-pool-size: 8
+    queue-capacity: 100
+
+logging:
+  level:
+    com.dongnguyen248.add2num.web: INFO
+    com.dongnguyen248.add2num.MyBigNumber: WARN
