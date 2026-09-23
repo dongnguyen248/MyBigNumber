@@ -5,13 +5,96 @@
     const submitButton = document.querySelector("#submit-button");
     const progressSection = document.querySelector("#progress-section");
     const progressBar = document.querySelector("#progress-bar");
-    const progressContainer = progressBar.closest(".progress");
+    const progressContainer = progressBar.closest(".progress-track");
     const progressLabel = document.querySelector("#progress-label");
     const progressCount = document.querySelector("#progress-count");
     const errorMessage = document.querySelector("#error-message");
     const resultSection = document.querySelector("#result-section");
     const resultValue = document.querySelector("#result-value");
     let eventSource;
+
+        const practicePanel = document.querySelector("#practice-panel");
+        const startPractice = document.querySelector("#start-practice");
+        const closePractice = document.querySelector("#close-practice");
+        const expression = document.querySelector("#exercise-expression");
+        const answer = document.querySelector("#exercise-answer");
+        const feedback = document.querySelector("#exercise-feedback");
+        const checkAnswer = document.querySelector("#check-answer");
+        const exerciseNumber = document.querySelector("#exercise-number");
+        const exerciseProgressBar = document.querySelector("#exercise-progress-bar");
+        let currentExercise;
+        let exerciseIndex = 0;
+
+        const exercises = [
+            { left: "1234", right: "897", operation: "+" },
+            { left: "2500", right: "748", operation: "-" },
+            { left: "9999", right: "1", operation: "+" },
+            { left: "6000", right: "2755", operation: "-" },
+            { left: "4876", right: "912", operation: "+" },
+            { left: "10000", right: "999", operation: "-" },
+            { left: "704", right: "296", operation: "+" },
+            { left: "8300", right: "1645", operation: "-" },
+            { left: "12345", right: "6789", operation: "+" },
+            { left: "5000", right: "2345", operation: "-" }
+        ];
+
+        const formatNumber = (value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+        const calculate = (exercise) => exercise.operation === "+"
+            ? BigInt(exercise.left) + BigInt(exercise.right)
+            : BigInt(exercise.left) - BigInt(exercise.right);
+
+        const loadExercise = () => {
+            currentExercise = exercises[exerciseIndex];
+            expression.textContent = `${formatNumber(currentExercise.left)} ${currentExercise.operation} ${formatNumber(currentExercise.right)} =`;
+            exerciseNumber.textContent = String(exerciseIndex + 1);
+            exerciseProgressBar.style.width = `${((exerciseIndex + 1) / exercises.length) * 100}%`;
+            answer.value = "";
+            answer.disabled = false;
+            feedback.textContent = "";
+            feedback.className = "exercise-feedback";
+            checkAnswer.textContent = "Kiểm tra đáp án →";
+            answer.focus();
+        };
+
+        const showPractice = () => {
+            exerciseIndex = 0;
+            practicePanel.hidden = false;
+            loadExercise();
+            practicePanel.scrollIntoView({ behavior: "smooth", block: "center" });
+        };
+
+        startPractice.addEventListener("click", showPractice);
+        closePractice.addEventListener("click", () => { practicePanel.hidden = true; });
+
+        checkAnswer.addEventListener("click", () => {
+            const submitted = answer.value.trim();
+            if (!/^\d+$/.test(submitted)) {
+                feedback.textContent = "Hãy nhập một số tự nhiên, không để trống nhé.";
+                feedback.className = "exercise-feedback wrong";
+                return;
+            }
+            const expected = calculate(currentExercise).toString();
+            if (BigInt(submitted) === BigInt(expected)) {
+                feedback.textContent = "Chính xác! Bạn đã xử lý đúng từng hàng số.";
+                feedback.className = "exercise-feedback correct";
+                answer.disabled = true;
+                if (exerciseIndex < exercises.length - 1) {
+                    checkAnswer.textContent = "Câu tiếp theo →";
+                    checkAnswer.onclick = () => { exerciseIndex += 1; loadExercise(); checkAnswer.onclick = null; };
+                } else {
+                    checkAnswer.textContent = "Hoàn thành bài học ✓";
+                    checkAnswer.onclick = () => { feedback.textContent = "Bạn đã hoàn thành 10 câu. Hẹn gặp lại ở bài tiếp theo!"; };
+                }
+            } else {
+                feedback.textContent = `Chưa đúng. Hãy thử đặt tính theo từng hàng rồi kiểm tra phần nhớ.`;
+                feedback.className = "exercise-feedback wrong";
+            }
+        });
+
+        answer.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") { event.preventDefault(); checkAnswer.click(); }
+        });
 
     const resetVisualState = () => {
         errorMessage.hidden = true;
@@ -37,7 +120,7 @@
         let valid = true;
         [firstNumber, secondNumber].forEach((input) => {
             const feedback = input.nextElementSibling;
-            const message = /^\d+$/.test(input.value) ? "" : "Enter decimal digits only.";
+            const message = /^\d+$/.test(input.value.trim()) ? "" : "Chỉ nhập các chữ số thập phân.";
             input.setCustomValidity(message);
             input.classList.toggle("is-invalid", Boolean(message));
             feedback.textContent = message;
@@ -52,7 +135,7 @@
             progressSection.hidden = false;
             progressBar.style.width = `${percentage}%`;
             progressContainer.setAttribute("aria-valuenow", String(percentage));
-            progressLabel.textContent = `${percentage}% complete`;
+            progressLabel.textContent = `${percentage}% hoàn thành`;
             progressCount.textContent = `${completedSteps} / ${totalSteps}`;
         }
         if (status.status === "COMPLETED") {
@@ -65,7 +148,7 @@
             submitButton.disabled = false;
             closeStream();
         } else if (status.status === "FAILED") {
-            displayError(status.error || "The addition could not be completed.");
+            displayError(status.error || "Không thể thực hiện phép cộng.");
             submitButton.disabled = false;
             closeStream();
         }
@@ -112,7 +195,7 @@
         }
         submitButton.disabled = true;
         progressSection.hidden = false;
-        progressLabel.textContent = "Starting calculation";
+        progressLabel.textContent = "Đang bắt đầu phép tính";
         try {
             const response = await fetch("/api/additions", {
                 method: "POST",

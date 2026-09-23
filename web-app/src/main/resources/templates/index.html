@@ -1,58 +1,79 @@
 <!doctype html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="vi" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add2Num</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Add2Num | Học toán mỗi ngày</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body>
-<main class="application-shell">
-    <section class="workspace" aria-labelledby="page-title">
-        <header class="workspace-header">
-            <p class="eyebrow">Decimal arithmetic</p>
-            <h1 id="page-title">Add2Num</h1>
+<main class="app-shell">
+    <aside class="sidebar" aria-label="Điều hướng chính">
+        <a class="brand" href="#practice"><span class="brand-mark">+</span><span>Add2Num</span></a>
+        <p class="sidebar-label">Không gian học</p>
+        <nav class="main-nav">
+            <a class="nav-link active" href="#practice"><span class="nav-icon">⌂</span> Học hôm nay</a>
+            <a class="nav-link" href="#progress"><span class="nav-icon">↗</span> Tiến độ</a>
+            <a class="nav-link" href="#calculator"><span class="nav-icon">∑</span> Máy tính số lớn</a>
+        </nav>
+        <div class="sidebar-tip">
+            <span class="tip-kicker">Mẹo hôm nay</span>
+            <p>Đọc kỹ từng hàng số. Phần nhớ nhỏ nhưng rất quan trọng.</p>
+        </div>
+        <div class="student-chip"><span class="avatar">AN</span><span><strong>An Nguyễn</strong><small>Lớp 5 · Học sinh</small></span></div>
+    </aside>
+
+    <section class="content" aria-labelledby="page-title">
+        <header class="topbar">
+            <div><p class="eyebrow">Thứ hai, 23 tháng 9</p><h1 id="page-title">Chào An, sẵn sàng học chưa?</h1></div>
+            <div class="streak"><span class="streak-fire">✦</span><span><strong>5 ngày</strong><small>chuỗi học tập</small></span></div>
         </header>
 
-        <form id="addition-form" class="addition-form" novalidate>
-            <div class="row g-4">
-                <div class="col-12 col-lg-6">
-                    <label class="form-label" for="first-number">First number</label>
-                    <textarea id="first-number" class="form-control number-input" name="firstNumber" required
-                              inputmode="numeric" pattern="\d+" spellcheck="false" rows="6"></textarea>
-                    <div class="invalid-feedback"></div>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <label class="form-label" for="second-number">Second number</label>
-                    <textarea id="second-number" class="form-control number-input" name="secondNumber" required
-                              inputmode="numeric" pattern="\d+" spellcheck="false" rows="6"></textarea>
-                    <div class="invalid-feedback"></div>
-                </div>
+        <section id="practice" class="hero-grid" aria-labelledby="practice-title">
+            <div class="welcome-panel">
+                <div class="panel-orbit orbit-one"></div><div class="panel-orbit orbit-two"></div>
+                <p class="eyebrow light">Bài học hôm nay</p>
+                <h2 id="practice-title">Cộng và trừ<br><em>số tự nhiên</em></h2>
+                <p class="hero-copy">Luyện cách đặt tính và xử lý phần nhớ qua 10 câu hỏi ngắn.</p>
+                <button id="start-practice" class="button button-light" type="button">Bắt đầu luyện tập <span>→</span></button>
+                <span class="lesson-meta">Khoảng 8 phút <span>·</span> Mức độ vừa</span>
             </div>
-            <div class="actions">
-                <button id="submit-button" class="btn btn-primary" type="submit">Add numbers</button>
-                <button id="reset-button" class="btn btn-outline-secondary" type="reset">Reset</button>
-            </div>
-        </form>
-
-        <section id="progress-section" class="progress-section" hidden aria-live="polite">
-            <div class="progress-meta">
-                <span id="progress-label">Preparing calculation</span>
-                <span id="progress-count">0 / 0</span>
-            </div>
-            <div class="progress" role="progressbar" aria-label="Addition progress" aria-valuemin="0" aria-valuemax="100"
-                 aria-valuenow="0">
-                <div id="progress-bar" class="progress-bar" style="width: 0%"></div>
+            <div class="goal-panel">
+                <div class="panel-heading"><span>Mục tiêu tuần này</span><span class="goal-ring">68%</span></div>
+                <div class="goal-bar"><span style="width: 68%"></span></div>
+                <p>Thêm 2 buổi học để hoàn thành mục tiêu.</p>
+                <div class="week-dots" aria-label="Tiến độ học trong tuần"><span class="done">T2</span><span class="done">T3</span><span class="done">T4</span><span class="done">T5</span><span class="today">T6</span><span>T7</span><span>CN</span></div>
             </div>
         </section>
 
-        <div id="error-message" class="alert alert-danger" role="alert" hidden></div>
-        <section id="result-section" class="result-section" hidden aria-live="polite">
-            <p class="eyebrow">Sum</p>
-            <output id="result-value" class="result-value"></output>
+        <section class="section-block" aria-labelledby="skills-title">
+            <div class="section-heading"><div><p class="eyebrow">Bản đồ kỹ năng</p><h2 id="skills-title">Bạn đang tiến bộ</h2></div><a href="#progress" class="text-link">Xem chi tiết <span>→</span></a></div>
+            <div class="skill-grid">
+                <article class="skill-card"><div class="skill-icon coral">+</div><div><h3>Cộng có nhớ</h3><p>16 / 20 câu đúng</p><div class="mini-bar"><span style="width: 80%"></span></div></div><strong>80%</strong></article>
+                <article class="skill-card"><div class="skill-icon mint">−</div><div><h3>Trừ có mượn</h3><p>12 / 20 câu đúng</p><div class="mini-bar"><span style="width: 60%"></span></div></div><strong>60%</strong></article>
+                <article class="skill-card"><div class="skill-icon yellow">≡</div><div><h3>Đặt tính</h3><p>18 / 20 câu đúng</p><div class="mini-bar"><span style="width: 90%"></span></div></div><strong>90%</strong></article>
+            </div>
         </section>
+
+        <section id="practice-panel" class="practice-panel" hidden aria-labelledby="exercise-title">
+            <div class="practice-header"><div><p class="eyebrow">Câu <span id="exercise-number">1</span> / 10</p><h2 id="exercise-title">Tính kết quả</h2></div><button id="close-practice" class="icon-button" type="button" aria-label="Đóng bài luyện tập">×</button></div>
+            <div class="exercise-progress"><span id="exercise-progress-bar"></span></div>
+            <div class="exercise-card"><p class="exercise-label">Hãy tính</p><div id="exercise-expression" class="exercise-expression">1.234 + 897 =</div><label class="sr-only" for="exercise-answer">Đáp án</label><input id="exercise-answer" class="answer-input" inputmode="numeric" autocomplete="off" placeholder="Nhập đáp án" type="text"><p id="exercise-feedback" class="exercise-feedback" aria-live="polite"></p><button id="check-answer" class="button button-dark" type="button">Kiểm tra đáp án <span>→</span></button></div>
+        </section>
+
+        <section id="progress" class="section-block progress-overview" aria-labelledby="progress-title">
+            <div class="section-heading"><div><p class="eyebrow">Tổng quan</p><h2 id="progress-title">Nhịp học của bạn</h2></div></div>
+            <div class="progress-layout"><div class="chart-card"><div class="chart-summary"><strong>84%</strong><span>độ chính xác<br><small>+12% so với tuần trước</small></span></div><div class="chart-bars" aria-label="Biểu đồ số câu đúng trong 7 ngày"><i style="height: 42%"></i><i style="height: 60%"></i><i style="height: 52%"></i><i style="height: 76%"></i><i class="highlight" style="height: 88%"></i><i style="height: 68%"></i><i style="height: 78%"></i></div><div class="chart-labels"><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span></div></div><div class="activity-card"><p class="eyebrow">Gần đây</p><div class="activity-row"><span class="activity-check">✓</span><span><strong>Cộng có nhớ</strong><small>10 câu · hôm nay</small></span><b>8/10</b></div><div class="activity-row"><span class="activity-check">✓</span><span><strong>Đặt tính</strong><small>10 câu · hôm qua</small></span><b>9/10</b></div><div class="activity-row"><span class="activity-check">✓</span><span><strong>Giá trị hàng</strong><small>10 câu · 2 ngày trước</small></span><b>7/10</b></div></div></div>
+        </section>
+
+        <section id="calculator" class="calculator-section" aria-labelledby="calculator-title"><div class="section-heading"><div><p class="eyebrow">Công cụ nâng cao</p><h2 id="calculator-title">Máy tính số lớn</h2></div><span class="tool-badge">Không giới hạn chữ số</span></div><p class="calculator-intro">Thử cộng hai số rất dài bằng thuật toán đặt tính dọc từ phải sang trái.</p>
+            <form id="addition-form" class="addition-form" novalidate><div class="number-fields"><div><label for="first-number">Số thứ nhất</label><textarea id="first-number" name="firstNumber" required inputmode="numeric" pattern="\d+" spellcheck="false" rows="3" placeholder="Ví dụ: 1234"></textarea><div class="invalid-feedback"></div></div><div><label for="second-number">Số thứ hai</label><textarea id="second-number" name="secondNumber" required inputmode="numeric" pattern="\d+" spellcheck="false" rows="3" placeholder="Ví dụ: 897"></textarea><div class="invalid-feedback"></div></div></div><div class="actions"><button id="submit-button" class="button button-dark" type="submit">Cộng hai số <span>→</span></button><button id="reset-button" class="button button-quiet" type="reset">Xóa</button></div></form>
+            <section id="progress-section" class="calc-progress" hidden aria-live="polite"><div class="progress-meta"><span id="progress-label">Đang chuẩn bị</span><span id="progress-count">0 / 0</span></div><div class="progress-track" role="progressbar" aria-label="Tiến độ phép cộng" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progress-bar"></div></div></section><div id="error-message" class="alert" role="alert" hidden></div><section id="result-section" class="result-section" hidden aria-live="polite"><p class="eyebrow">Kết quả</p><output id="result-value" class="result-value"></output></section>
+        </section>
+        <footer><span>Add2Num · Học toán từng bước</span><span>Phiên bản thử nghiệm V1</span></footer>
     </section>
 </main>
 <script th:src="@{/js/app.js}"></script>

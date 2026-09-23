@@ -18,6 +18,21 @@ body {
     min-height: 100vh;
 }
 
+:root {
+     --ink: #20242a;
+     --muted: #788078;
+     --paper: #f7f7f3;
+     --white: #fffefa;
+     --line: #e3e5dc;
+     --navy: #20364b;
+     --navy-dark: #17293a;
+     --coral: #ef7f69;
+     --mint: #b9dfc9;
+     --yellow: #f1cf68;
+     --green: #4b9a79;
+}
+
+
 .application-shell {
     margin: 0 auto;
     max-width: 1080px;
@@ -26,25 +41,51 @@ body {
 
 .workspace {
     background: var(--panel);
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+.application-shell {
     border: 1px solid var(--line);
     border-top: 6px solid var(--accent);
     box-shadow: 8px 8px 0 rgba(23, 33, 43, 0.1);
     padding: clamp(1.5rem, 4vw, 3.5rem);
+
+body {
+     background: var(--paper);
+     color: var(--ink);
+     font-family: "DM Sans", "Segoe UI", sans-serif;
+     margin: 0;
+     min-width: 320px;
+}
+
+.workspace {
 }
 
 .workspace-header {
     border-bottom: 1px solid var(--line);
     margin-bottom: 2.5rem;
     padding-bottom: 1.25rem;
+
+button, input, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; }
+
+.workspace-header {
 }
 
 h1 {
     font-size: clamp(2.2rem, 5vw, 4rem);
+
+h1 {
     font-weight: 700;
     letter-spacing: 0;
     margin: 0;
 }
 
+
+.eyebrow {
 .eyebrow {
     color: var(--muted);
     font-family: "Trebuchet MS", sans-serif;
@@ -53,8 +94,12 @@ h1 {
     letter-spacing: 0;
     margin: 0 0 0.35rem;
     text-transform: uppercase;
+
+.form-label, .progress-meta, .actions {
 }
 
+
+.number-input {
 .form-label, .progress-meta, .actions {
     font-family: "Trebuchet MS", sans-serif;
 }
@@ -63,38 +108,58 @@ h1 {
     background: #fff;
     border-color: var(--line);
     border-radius: 2px;
+
+.number-input:focus {
     color: var(--ink);
     font-family: Consolas, "Courier New", monospace;
     overflow-wrap: anywhere;
+
+.actions {
     resize: vertical;
 }
 
 .number-input:focus {
     border-color: var(--accent);
+
+.btn {
     box-shadow: 0 0 0 0.2rem rgba(19, 124, 139, 0.18);
 }
 
+
+.btn-primary {
 .actions {
     display: flex;
     flex-wrap: wrap;
+
+.btn-primary:hover, .btn-primary:focus {
     gap: 0.75rem;
     margin-top: 1.75rem;
 }
 
+.progress-section, .result-section {
+
 .btn {
     border-radius: 2px;
     font-weight: 700;
+
+.progress-meta {
 }
 
 .btn-primary {
     background-color: var(--accent);
     border-color: var(--accent);
+
+.progress {
 }
 
 .btn-primary:hover, .btn-primary:focus {
+
+.progress-bar {
     background-color: var(--accent-dark);
     border-color: var(--accent-dark);
 }
+
+.result-value {
 
 .progress-section, .result-section {
     border-top: 1px solid var(--line);
@@ -102,9 +167,14 @@ h1 {
     padding-top: 1.5rem;
 }
 
+
+.alert {
 .progress-meta {
     display: flex;
     font-size: 0.9rem;
+
+@media (max-width: 850px) { .application-shell { display: block; }.sidebar { min-height: auto; padding: 1rem 1.2rem; }.sidebar-label, .sidebar-tip, .student-chip { display: none; }.main-nav { display: flex; margin-top: 1rem; overflow-x: auto; }.nav-link { flex: 0 0 auto; padding: .55rem .7rem; }.content { padding-top: 2rem; } }
+@media (max-width: 620px) { .topbar { gap: 1rem; }.streak { padding: .4rem; }.streak span:last-child { display: none; }.hero-grid, .skill-grid, .progress-layout, .number-fields { grid-template-columns: 1fr; }.welcome-panel { min-height: 280px; }.skill-card { grid-template-columns: 43px 1fr auto; }.section-block, .calculator-section { margin-top: 2.5rem; }.content { padding-left: 1rem; padding-right: 1rem; } footer { flex-direction: column; gap: .45rem; } }
     justify-content: space-between;
     margin-bottom: 0.5rem;
 }
